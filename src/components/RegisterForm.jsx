@@ -35,7 +35,10 @@ const RegisterForm = ({state}) => {
       await queryClient.invalidateQueries({queryKey: ['currentUser']});
       // Force a refetch to ensure the latest data
       await queryClient.refetchQueries({queryKey: ['currentUser']});
-      navigate({to:"/dashboard"});
+      setTimeout(() => {
+        navigate({to: "/dashboard"});
+        setLoading(false);
+    }, 100);
     } catch (err) {
       setLoading(false);
       setError(err.message || 'Registration failed. Please try again.');

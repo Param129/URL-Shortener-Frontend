@@ -22,13 +22,17 @@ const LoginForm = ({ state }) => {
         try {
             const data = await loginUser(password, email);
             // Store the complete user object in Redux
-            dispatch(login({user: data.user}));
+            dispatch(login(data.user)); // Modified: Pass data.user directly instead of {user: data.user}
             // Invalidate and refetch the currentUser query
             await queryClient.invalidateQueries({queryKey: ['currentUser']});
             // Force a refetch to ensure the latest data
             await queryClient.refetchQueries({queryKey: ['currentUser']});
-            navigate({to: "/dashboard"});
-            setLoading(false);
+            
+            // Add a small delay to ensure state is updated before navigation
+            setTimeout(() => {
+                navigate({to: "/dashboard"});
+                setLoading(false);
+            }, 100);
         } catch (err) {
             setLoading(false);
             setError(err.message || 'Login failed. Please check your credentials.');
