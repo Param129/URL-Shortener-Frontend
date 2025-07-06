@@ -88,12 +88,12 @@ const UserUrl = () => {
                 <td className="px-6 py-4">
                   <div className="text-sm">
                     <a 
-                      href={`https://url-shortener-frontend-gilt.vercel.app/${url.short_url}`} 
+                      href={`https://url-shortner-backend-ow3q.onrender.com/${url.short_url}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-blue-400 hover:text-blue-300 hover:underline transition-colors duration-200"
                     >
-                      {`url-shortener-frontend-gilt.vercel.app/${url.short_url}`}
+                      {`https://url-shortner-backend-ow3q.onrender.com/${url.short_url}`}
                     </a>
                   </div>
                 </td>
@@ -106,7 +106,7 @@ const UserUrl = () => {
                 </td>
                 <td className="px-6 py-4 text-sm font-medium">
                   <button
-                    onClick={() => handleCopy(`https://url-shortener-frontend-gilt.vercel.app/${url.short_url}`, url._id)}
+                    onClick={() => handleCopy(`https://url-shortner-backend-ow3q.onrender.com/${url.short_url}`, url._id)}
                     className={`inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm ${
                       copiedId === url._id
                         ? 'bg-green-600 text-white hover:bg-green-700'
