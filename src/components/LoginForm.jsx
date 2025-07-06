@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { loginUser } from '../api/user.api';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { login } from '../store/slice/authSlice.js';
 import { useNavigate } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
@@ -10,10 +10,10 @@ const LoginForm = ({ state }) => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const auth = useSelector((state) => state.auth)
     const queryClient = useQueryClient();
-    const auth = useSelector((state) => state.auth);
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -22,17 +22,14 @@ const LoginForm = ({ state }) => {
         try {
             const data = await loginUser(password, email);
             // Store the complete user object in Redux
-            dispatch(login(data.user)); // Modified: Pass data.user directly instead of {user: data.user}
-            // Invalidate and refetch the currentUser query
+            dispatch(login({user: data.user}));
+
             await queryClient.invalidateQueries({queryKey: ['currentUser']});
             // Force a refetch to ensure the latest data
             await queryClient.refetchQueries({queryKey: ['currentUser']});
             
-            // Add a small delay to ensure state is updated before navigation
-            setTimeout(() => {
-                navigate({to: "/dashboard"});
-                setLoading(false);
-            }, 100);
+            navigate({to:"/dashboard"})
+            setLoading(false);
         } catch (err) {
             setLoading(false);
             setError(err.message || 'Login failed. Please check your credentials.');
